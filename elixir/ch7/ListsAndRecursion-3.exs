@@ -28,6 +28,6 @@ defmodule MyList do
   # ... or we can just use the Enum.map/2 function ...
   def caesar_with_map(list, rotate) do
     # ... but it doesn't assert the precondition ... 🤷🏼‍
-    list |> Enum.map(transform(rotate)
+    list |> Enum.map(transform(rotate))
   end
 end
