@@ -56,7 +56,7 @@ defmodule Fold do
   def reverse(list), do: foldr(fn x, acc -> acc ++ [x] end, []).(list)
 
   # map :: (α → β) → ([α] → [β])
-  defpartial map(func, list) do 
+  defpartial map(func, list) do
     foldr(fn x, acc -> [func.(x) | acc] end, []).(list)
   end
 
