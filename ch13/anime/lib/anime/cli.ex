@@ -9,7 +9,9 @@ defmodule Anime.CLI do
   """
 
   def run(argv) do
-    parse_args(argv)
+    argv
+    |> parse_args
+    |> process
   end
 
   @doc """
@@ -20,15 +22,34 @@ defmodule Anime.CLI do
   Return a tuple of `{ username, count }` or `:help` if help was given.
   """
   def parse_args(argv) do
-    parse = OptionParser.parse(argv, switches: [ help: :boolean ],
+    OptionParser.parse(argv, switches: [ help: :boolean ],
                                      aliases: [ h: :help ])
+    |> elem(1)
+    |> args_to_internal_representation()
+  end
 
-    case parse do
-      { [ help: true ], _, _ }      -> :help
-      { _, [ username, count ], _ } -> { username, String.to_integer(count) }
-      { _, [ username ], _ }        -> { username, @default_count }
-      _                             -> :help
-    end
+  def args_to_internal_representation([ username, count ]) do
+    { username, String.to_integer(count) }
+  end
+
+  def args_to_internal_representation([ username ]) do
+    { username, @default_count }
+  end
+
+  def args_to_internal_representation(_) do
+    :help
+  end
+
+  def process(:help) do
+    IO.puts """
+    usage:  anime <username> [ count | #{@default_count} ]
+    """
+    System.halt(0)
+  end
+
+  def process({ username, _count }) do
+    # [TODO] Implement this function.
+    Anime.AnimeList.fetch(username)
   end
 end
 
