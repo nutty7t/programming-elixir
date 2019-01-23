@@ -12,6 +12,7 @@ defmodule Anime.CLI do
     argv
     |> parse_args
     |> process
+    |> IO.inspect
   end
 
   @doc """
@@ -47,9 +48,31 @@ defmodule Anime.CLI do
     System.halt(0)
   end
 
-  def process({ username, _count }) do
-    # [TODO] Implement this function.
+  def process({ username, count }) do
     Anime.AnimeList.fetch(username)
+    |> decode_response
+    |> sort_into_descending_order
+    |> last(count)
+  end
+
+  def decode_response({:ok, body}), do: body["anime"]
+
+  def decode_response({:error, error}) do
+    IO.puts "Error fetching from MyAnimeList: #{error["message"]}"
+    System.halt(2)
+  end
+
+  def sort_into_descending_order(anime_list) do
+    anime_list
+    |> Enum.sort(fn a1, a2 ->
+      a1["watch_start_date"] >= a2["watch_start_date"]
+    end)
+  end
+
+  def last(list, count) do
+    list
+    |> Enum.take(count)
+    |> Enum.reverse
   end
 end
 

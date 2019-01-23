@@ -21,7 +21,8 @@ defmodule Anime.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:httpoison, "~> 1.4"}
+      {:httpoison, "~> 1.4"},
+      {:poison, "~> 3.1"}
     ]
   end
 end

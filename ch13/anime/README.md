@@ -15,6 +15,9 @@ including the following one:
 ```bash
 # Run tests whenever an Elixir file is modified.
 rg -l . | grep ex | entr mix test
+
+# Run the Anime.CLI.run function.
+mix run -e 'Anime.CLI.run(["nuttywhal", "3"])'
 ```
 
 ## Installation
