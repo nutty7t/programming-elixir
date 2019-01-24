@@ -8,7 +8,7 @@ defmodule Anime.CLI do
   of the last _n_ animes watched for a MyAnimeList user.
   """
 
-  def run(argv) do
+  def main(argv) do
     argv
     |> parse_args
     |> process

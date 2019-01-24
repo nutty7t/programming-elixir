@@ -18,6 +18,12 @@ rg -l . | grep ex | entr mix test
 
 # Run the Anime.CLI.run function.
 mix run -e 'Anime.CLI.run(["nuttywhal", "3"])'
+
+# Generate escript binary.
+mix escript.build
+
+# Generate documentation.
+mix docs
 ```
 
 ## Installation
