@@ -12,6 +12,7 @@ defmodule Anime.CLI do
     argv
     |> parse_args
     |> process
+    |> Anime.Formatter.format(["title", "total_episodes"])
     |> IO.inspect
   end
 
